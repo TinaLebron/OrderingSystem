@@ -32,10 +32,18 @@ public class ActMain extends AppCompatActivity {
 
     private Button btnOk;
 
+    static int BLACK_TEA_PRICE;
+    static int GREEN_TEA_PRICE;
+    static int MILK_TEA_PRICE;
+
+
     int blackTeaSum=0;
     int greenTeaSum=0;
     int milkTeaSum=0;
 
+    int totalBlackTea = 0;
+    int totalGreenTea = 0;
+    int totalMilkTea = 0;
     int total = 0;
 
     private TextWatcher etBlackTeaQuantity_click = new TextWatcher() {
@@ -46,7 +54,32 @@ public class ActMain extends AppCompatActivity {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
+            String regex = "[0-9]+";
+            String val = s.toString();
 
+            if(val.matches(regex)){
+                blackTeaSum = Integer.parseInt(s.toString());
+
+            }
+            else if(val.equals("")){
+                Log.d("ActMain","Delete action");
+
+                //使用者按下刪除後，價錢要從算
+                blackTeaSum = 0;
+                totalBlackTea = 0;
+            }
+            else {
+                Log.d("ActMain","output:" + val);
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(ActMain.this,"請輸入數字1~9",Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+            }
 
         }
 
@@ -54,19 +87,9 @@ public class ActMain extends AppCompatActivity {
 
         @Override
         public void afterTextChanged(Editable s) {
-            String p1 = tvBlackTeaPrice.getText().toString();
-            int blackTeaPrice = Integer.parseInt(p1);
-            blackTeaSum=0;
-            String regex = "[0-9]+";
-            String val = s.toString();
-            if(val.matches(regex)){
-                blackTeaSum = Integer.parseInt(s.toString());
-                ShowTotal(blackTeaSum,blackTeaPrice);
-            }
-            else {
-                Log.d("ActMain","output:" + val);
-                clear();
-            }
+            int total = blackTeaSum * BLACK_TEA_PRICE;
+            totalBlackTea = total;
+            ShowTotal(totalBlackTea,totalGreenTea,totalMilkTea);
         }
     };
 
@@ -78,26 +101,38 @@ public class ActMain extends AppCompatActivity {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
+            greenTeaSum=0;
+            String regex = "[0-9]+";
+            String val = s.toString();
 
+            if(val.matches(regex)){
+                greenTeaSum = Integer.parseInt(s.toString());
+            }
+            else if(val.equals("")){
+                Log.d("ActMain","Delete action");
+                //使用者按下刪除後，價錢要從算
+                greenTeaSum = 0;
+                totalGreenTea = 0;
+            }
+            else {
+                Log.d("ActMain","output:" + val);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(ActMain.this,"請輸入數字1~9",Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            }
         }
 
 
 
         @Override
         public void afterTextChanged(Editable s) {
-            String p2 = tvGreenTeaPrice.getText().toString();
-            int greenTeaPrice = Integer.parseInt(p2);
-            greenTeaSum=0;
-            String regex = "[0-9]+";
-            String val = s.toString();
-            if(val.matches(regex)){
-                greenTeaSum = Integer.parseInt(s.toString());
-                ShowTotal(greenTeaSum,greenTeaPrice);
-            }
-            else {
-                Log.d("ActMain","output:" + val);
-                clear();
-            }
+            int total = greenTeaSum * GREEN_TEA_PRICE;
+            totalGreenTea = total;
+            ShowTotal(totalBlackTea,totalGreenTea,totalMilkTea);
         }
     };
 
@@ -109,34 +144,49 @@ public class ActMain extends AppCompatActivity {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
+            milkTeaSum=0;
+            String regex = "[0-9]+";
+            String val = s.toString();
+            if(val.matches(regex)){
+                milkTeaSum = Integer.parseInt(s.toString());
+//                ShowTotal(milkTeaSum,MILK_TEA_PRICE);
+            }
+            else if(val.equals("")){
+                Log.d("ActMain","Delete action");
 
+                milkTeaSum = 0;
+                totalMilkTea = 0;
+            }
+            else {
+                Log.d("ActMain","output:" + val);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(ActMain.this,"請輸入數字1~9",Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                //clear();
+
+            }
         }
 
 
 
         @Override
         public void afterTextChanged(Editable s) {
-            String p3 = tvMilkTeaPrice.getText().toString();
-            int milkTeaPrice = Integer.parseInt(p3);
-            milkTeaSum=0;
-            String regex = "[0-9]+";
-            String val = s.toString();
-            if(val.matches(regex)){
-                milkTeaSum = Integer.parseInt(s.toString());
-                ShowTotal(milkTeaSum,milkTeaPrice);
-            }
-            else {
-                Log.d("ActMain","output:" + val);
-                clear();
-            }
+
+            int total = milkTeaSum * MILK_TEA_PRICE;
+            totalMilkTea = total;
+            ShowTotal(totalBlackTea,totalGreenTea,totalMilkTea);
         }
     };
 
 
 
     //顯示總價錢
-    public void ShowTotal(int quantity,int price){
-        total += (price * quantity);
+    public void ShowTotal(int tBlackTea,int tGreenTea , int tMilkTea){
+        total = tBlackTea + tGreenTea + tMilkTea;
 
         tvTotal.setText(total + "");
 
@@ -168,12 +218,23 @@ public class ActMain extends AppCompatActivity {
     private View.OnClickListener btnOk_click=new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+
             if (v.getId() == R.id.btnOk){
 
                 //自動產生時間
                 String dts = AutomaticGenerationTime();
 
-                String content = "總價:" + total + "\n" + dts;
+                String item="";
+                if(blackTeaSum > 0)
+                    item += "紅茶 x" + blackTeaSum + "   $" + totalBlackTea + "\n";
+                if(greenTeaSum > 0)
+                    item += "綠茶 x" + greenTeaSum + "   $" + totalGreenTea + "\n";
+                if(milkTeaSum > 0)
+                    item += "奶茶 x" + milkTeaSum + "   $" + totalMilkTea + "\n";
+                String totalPrice = "\n" + "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t總價 : " + total + "\n";
+                String buyDate = "購買日期 : " + dts + "\n";
+
+                String content = item + totalPrice + buyDate;
 
                 new AlertDialog.Builder(ActMain.this)
                         .setTitle("列印訂購單")  //設定dialog 的title顯示內容
@@ -198,6 +259,14 @@ public class ActMain extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_main);
         InitialComponent();
+        String p1 = tvBlackTeaPrice.getText().toString();
+        BLACK_TEA_PRICE = Integer.parseInt(p1);
+
+        String p2 = tvGreenTeaPrice.getText().toString();
+        GREEN_TEA_PRICE = Integer.parseInt(p2);
+
+        String p3 = tvMilkTeaPrice.getText().toString();
+        MILK_TEA_PRICE = Integer.parseInt(p3);
     }
 
     @Override
