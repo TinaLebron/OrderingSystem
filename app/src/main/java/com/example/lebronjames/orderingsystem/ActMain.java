@@ -231,8 +231,8 @@ public class ActMain extends AppCompatActivity {
                     item += "綠茶 x" + greenTeaSum + "   $" + totalGreenTea + "\n";
                 if(milkTeaSum > 0)
                     item += "奶茶 x" + milkTeaSum + "   $" + totalMilkTea + "\n";
-                String totalPrice = "\n" + "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t總價 : " + total + "\n";
-                String buyDate = "購買日期 : " + dts + "\n";
+                String totalPrice = "\n" + "總價 : " + total + "\n";
+                String buyDate = "\n購買日期 : " + dts + "\n";
 
                 String content = item + totalPrice + buyDate;
 
