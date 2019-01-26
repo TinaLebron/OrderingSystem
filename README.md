@@ -1,6 +1,6 @@
 # OrderingSystem
 
-目的:
+目的:之前在C# form有作冷飲訂購系統
 
 https://github.com/TinaLebron/IOS-Swift_BeverageOrderingSystem
 
@@ -27,3 +27,11 @@ https://github.com/TinaLebron/IOS-Swift_BeverageOrderingSystem
 | quantity (數量)   | Enter the number of items the customer has purchased. |
 | Print order form(列印訂購單) | Print details,And display a message. |
 
+
+## Order Form
+
+<img src="https://github.com/TinaLebron/OrderingSystem/blob/master/Screenshot_20181226-195620.png" width="250"  />
+
+| Option | Description |
+| ------ | ----------- |
+| order form (訂購單)   | Show purchases and prices and today's date. |
