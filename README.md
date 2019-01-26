@@ -1,21 +1,18 @@
 # OrderingSystem
 
-目的:之前在C# form有作冷飲訂購系統
+目的:之前在C#_WindowsForms有作冷飲訂購系統,所以試著嘗試用其它程式語言,像是Java與Swift
 
+冷飲訂購系統(Swift):
 https://github.com/TinaLebron/IOS-Swift_BeverageOrderingSystem
 
 
 功能:  <br>
-       • 存儲當日所要存的金額 <br>
-	     • 首頁會顯示以前到現在所存的加總金額 <br>
-	     • 歷史紀錄按鈕會紀錄當下存錢的日期、時間與當下存的金額 <br>
-	     • 重置按鈕會跳出提示視窗,此按鈕會將系統所有紀錄清空 <br>
-	     • 資料會儲存到SQLite
-
+       • 輸入客戶購買飲料的數量 <br>
+       • 數量選擇好按下列印訂購單,會有訊息提示(Detail Inserted) <br>
+       • 訂購單會顯示客戶選擇的商品,數量,價錢與當天購買日期 <br>
+       
 改善: <br>
      • 版面要美化 <br>
-		 • 歷史紀錄可以做刪除 <br>
-	   • 功能要增加領錢系統 <br>
 
 ## Main 
 
